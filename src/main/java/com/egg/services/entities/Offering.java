@@ -14,8 +14,8 @@ import lombok.Setter;
 @Getter
 @Setter
 
-@Table(name = "service")
-public class Service {
+@Table(name = "offering")
+public class Offering {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,11 +30,11 @@ public class Service {
 	@NotEmpty
 	private String description;
 	
-	public Service() {
+	public Offering() {
 		this.state = true;
 	}
 
-	public Service( @NotEmpty String serviceType, @NotEmpty String description) {
+	public Offering( @NotEmpty String serviceType, @NotEmpty String description) {
 		super();
 		this.state = true;
 		this.serviceType = serviceType;

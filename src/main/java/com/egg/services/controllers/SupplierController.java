@@ -17,7 +17,7 @@ import com.egg.services.exceptions.ServicesException;
 import com.egg.services.services.SupplierService;
 
 //IMPORTANT
-//ALL OF THE ROUTES/FILENAMES CAN (AND POSSIBBLY) BE CHANGED
+//ALL OF THE ROUTES/FILENAMES CAN (AND POSSIBLY) BE CHANGED
 
 @Controller
 @RequestMapping("/supplier")
@@ -38,15 +38,12 @@ public class SupplierController implements CrudController<Supplier> {
 
 	@Override
 	@GetMapping("/save")
-	// GetMapping is responsible for sending the form to perform the action.
 	public String getForm(ModelMap model) {
 		return "supplier-form";
 	}
 
 	@Override
 	@PostMapping("/save")
-	// PostMapping receives the form data and when validated it is sent to the
-	// database.
 	public String create(@Valid Supplier supplier, ModelMap model) {
 		try {
 			supplierService.create(supplier);
@@ -63,8 +60,6 @@ public class SupplierController implements CrudController<Supplier> {
 
 	@Override
 	@GetMapping("modify/{id}")
-	// PathVariable is our way to obtain values sent through the url
-	// the value we are looking for must be placed between braces
 	public String modify(@PathVariable Integer id, ModelMap model) {
 		try {
 			Supplier supplier = supplierService.getById(id);

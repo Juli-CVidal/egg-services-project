@@ -18,13 +18,11 @@ public class SupplierService extends PersonService<Supplier> implements CrudServ
 	private SupplierRepository supplierRepository;
 
 	@Override
-	@Transactional(readOnly = true)
 	public List<Supplier> getAll() {
 		return supplierRepository.findAll();
 	}
 
 	@Override
-	@Transactional(readOnly = true)
 	public Supplier getById(Integer id) throws ServicesException {
 		Optional<Supplier> supplierOpt = supplierRepository.findById(id);
 		if (supplierOpt.isEmpty()) {
@@ -33,10 +31,9 @@ public class SupplierService extends PersonService<Supplier> implements CrudServ
 		return supplierOpt.get();
 	}
 
-	@Override
-	@Transactional(readOnly = true)
 	// If the field name is unique, change to public Supplier ...
 	// And manage the logic the same way
+	@Transactional(readOnly = true)
 	public List<Supplier> getByName(String name) throws ServicesException {
 		if (null == name || name.isBlank()) {
 			throw new ServicesException("No valid name entered");
@@ -48,14 +45,12 @@ public class SupplierService extends PersonService<Supplier> implements CrudServ
 	}
 
 	@Override
-	@Transactional
 	public void create(Supplier supplier) throws ServicesException {
 		validateSupplier(supplier);
 		supplierRepository.save(supplier);
 	}
 
 	@Override
-	@Transactional
 	public void update(Supplier supplier) throws ServicesException {
 		if (null == supplier || null == supplier.getId()) {
 			throw new ServicesException("Invalid supplier");
@@ -67,9 +62,8 @@ public class SupplierService extends PersonService<Supplier> implements CrudServ
 		create(supplier);
 	}
 
-	@Override
-	@Transactional
 	// Soft delete (Only change the state)
+	@Override
 	public void delete(Integer id) throws ServicesException {
 		Supplier supplier = getById(id);
 		supplier.setState(false);

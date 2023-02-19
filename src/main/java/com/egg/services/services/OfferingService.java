@@ -5,71 +5,69 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.egg.services.entities.Customer;
 import com.egg.services.entities.Offering;
 import com.egg.services.exceptions.ServicesException;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.egg.services.repositories.OfferingRepository;
 
 @Service
-public class OfferingService {
-	
-	@Autowired
-	private OfferingRepository offeringR;
+public class OfferingService implements CrudService<Offering> {
 
-	@Transactional(readOnly = true)
-	public List<Offering> getAll(){
-		return offeringR.findAll();
+	@Autowired
+	private OfferingRepository offeringRepository;
+
+	@Override
+	public List<Offering> getAll() {
+		return offeringRepository.findAll();
 	}
+
 	
-	@Transactional(readOnly = true)
-	 public Offering getById(Integer id) throws ServicesException {
-		Optional<Offering> offeringOpt = offeringR.findById(id);
+	@Override
+	public Offering getById(Integer id) throws ServicesException {
+		Optional<Offering> offeringOpt = offeringRepository.findById(id);
 		if (offeringOpt.isEmpty()) {
-			throw new ServicesException("No offering found");	
-		} 
+			throw new ServicesException("No offering found");
+		}
 		return offeringOpt.get();
 	}
+
+
+	@Override
+	public void create(Offering offering) throws ServicesException {
+		validateOffering(offering);
+		offeringRepository.save(offering);
+
+	}
+
 	
-	
-	  @Transactional
-	  public void create (Offering offering) throws ServicesException{
-		 validateOffering(offering);
-		 offeringR.save(offering);
-	 
-	  }
-	  
-	  
-	   @Transactional
-	 public void update (Offering offering) throws ServicesException{
-		  if (null == offering || null == offering.getId()) {
+	@Override
+	public void update(Offering offering) throws ServicesException {
+		if (null == offering || null == offering.getId()) {
 			throw new ServicesException("Invalid offering");
 		}
 		create(offering);
-		  
-	 }
-	   
-	   
-	     @Transactional
-	 public void delete (Integer id) throws ServicesException{
-		 Offering offering = getById(id);
-		 offering.setState(false);
-		 offeringR.save(offering);
-	 }
 
-	     
-	       private void validateOffering(Offering offering) throws ServicesException{
-	    	   
-	    	   if (null == offering.getServiceType() || offering.getServiceType().isEmpty()) {
-		   			throw new ServicesException("No valid service type");
-		   		}
-	    	   
-	    	   if (null == offering.getDescription() || offering.getDescription().isEmpty()) {
-		   			throw new ServicesException("No valid description");
-		   		}
-	    	   
-	       }
+	}
+
+	
+	@Override
+	public void delete(Integer id) throws ServicesException {
+		Offering offering = getById(id);
+		offering.setState(false);
+		offeringRepository.save(offering);
+	}
+
+	private void validateOffering(Offering offering) throws ServicesException {
+
+		if (null == offering.getServiceType() || offering.getServiceType().isEmpty()) {
+			throw new ServicesException("No valid service type");
+		}
+
+		if (null == offering.getDescription() || offering.getDescription().isEmpty()) {
+			throw new ServicesException("No valid description");
+		}
+
+	}
 }

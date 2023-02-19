@@ -27,7 +27,6 @@ public class SupplierController implements CrudController<Supplier> {
 	private SupplierService supplierService;
 
 	@Override
-	@GetMapping("/")
 	// If the getAllMethod is modified to throw an exception, add the catch
 	// Surrounding the first two lines
 	public String getAll(ModelMap model) {
@@ -37,13 +36,11 @@ public class SupplierController implements CrudController<Supplier> {
 	}
 
 	@Override
-	@GetMapping("/save")
 	public String getForm(ModelMap model) {
 		return "supplier-form";
 	}
 
 	@Override
-	@PostMapping("/save")
 	public String create(@Valid Supplier supplier, ModelMap model) {
 		try {
 			supplierService.create(supplier);
@@ -59,7 +56,6 @@ public class SupplierController implements CrudController<Supplier> {
 	}
 
 	@Override
-	@GetMapping("modify/{id}")
 	public String modify(@PathVariable Integer id, ModelMap model) {
 		try {
 			Supplier supplier = supplierService.getById(id);
@@ -72,7 +68,6 @@ public class SupplierController implements CrudController<Supplier> {
 	}
 
 	@Override
-	@PostMapping("/modify")
 	public String modify(@Valid Supplier supplier, ModelMap model) {
 		try {
 			supplierService.update(supplier);
@@ -86,7 +81,6 @@ public class SupplierController implements CrudController<Supplier> {
 	}
 
 	@Override
-	@PostMapping("/delete/{id}")
 	public String delete(@PathVariable("id") Integer id, ModelMap model) {
 		try {
 			supplierService.delete(id);

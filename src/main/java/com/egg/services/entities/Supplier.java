@@ -6,6 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+
+import com.egg.services.enums.Rol;
+
 import lombok.Getter;
 import lombok.Setter;
 

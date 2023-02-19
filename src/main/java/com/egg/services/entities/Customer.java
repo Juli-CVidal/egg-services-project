@@ -3,6 +3,9 @@ package com.egg.services.entities;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+
+import com.egg.services.enums.Rol;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

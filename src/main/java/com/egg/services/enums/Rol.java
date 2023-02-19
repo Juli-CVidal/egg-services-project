@@ -1,4 +1,4 @@
-package com.egg.services.entities;
+package com.egg.services.enums;
 
 public enum Rol {
 	CUSTOMER, ADMIN, SUPPLIER;

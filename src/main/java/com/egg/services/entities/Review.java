@@ -1,5 +1,6 @@
 package com.egg.services.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,10 +28,10 @@ public class Review {
 	@NotEmpty
 	private String content;
 
-	@NotEmpty
+	@Column(nullable = false, columnDefinition="MEDIUMTEXT")
 	private String image;
 
-	public Review(@NotEmpty Integer idClient, @NotEmpty String content, @NotEmpty String image) {
+	public Review(@NotEmpty Integer idClient, @NotEmpty String content, String image) {
 		this.idClient = idClient;
 		this.content = content;
 		this.image = image;

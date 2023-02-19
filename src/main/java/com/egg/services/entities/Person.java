@@ -1,5 +1,6 @@
 package com.egg.services.entities;
 
+import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -42,7 +43,7 @@ public abstract class Person {
 	@Email
 	protected String mail;
 
-	@NotEmpty
+	@Column(nullable = false, columnDefinition="MEDIUMTEXT")
 	protected String image;
 
 	@NotEmpty
@@ -53,7 +54,7 @@ public abstract class Person {
 	protected Rol rol;
 
 	public Person(@NotEmpty String name, @NotEmpty String lastname, @NotEmpty String phoneNumber,
-			@NotEmpty @Email String mail, @NotEmpty String image, @NotEmpty String password, @NotEmpty Rol rol) {
+			@NotEmpty @Email String mail, String image, @NotEmpty String password, @NotEmpty Rol rol) {
 		super();
 		this.name = name;
 		this.lastname = lastname;

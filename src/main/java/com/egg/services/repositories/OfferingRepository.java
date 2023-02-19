@@ -27,7 +27,7 @@ public interface OfferingRepository extends JpaRepository<Offering,Integer>{
 	//NOT IMPLEMENTED YET - Get all offerings from a Supplier
 	/*
 	@Query("SELECT o FROM Offering o WHERE o.supplierId = id")
-	List<Offering> findBySupplier(@Param("supplierId") Integer id);
+	List<Offering> findBySupplier(@Param("id") Integer id);
 	*/
 }
 

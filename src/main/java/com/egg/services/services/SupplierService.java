@@ -72,8 +72,8 @@ public class SupplierService extends PersonService<Supplier> implements CrudServ
 
 	private void validateSupplier(Supplier supplier) throws ServicesException {
 		super.validate(supplier);
-		if (null == supplier.getServices()) {
-			throw new ServicesException("The services list has not been created");
+		if (null == supplier.getOfferings()) {
+			throw new ServicesException("The offerings list has not been created");
 		}
 		if (null == supplier.getReviews()) {
 			throw new ServicesException("The reviews list has not been created");

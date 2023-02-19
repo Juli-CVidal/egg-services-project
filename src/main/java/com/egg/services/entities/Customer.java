@@ -6,14 +6,12 @@ import javax.validation.constraints.NotEmpty;
 
 import com.egg.services.enums.Rol;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @Table(name = "customer")
 public final class Customer extends Person {
 

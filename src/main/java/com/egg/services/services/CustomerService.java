@@ -12,58 +12,60 @@ import com.egg.services.exceptions.ServicesException;
 import com.egg.services.repositories.CustomerRepository;
 
 @Service
-public class CustomerService extends PersonService<Customer> {
+public class CustomerService extends PersonService<Customer> implements CrudService<Customer> {
 
 	@Autowired
-	private CustomerRepository customerR;
-	
-	@Transactional(readOnly = true)
-	public List<Customer> getAll(){
-		return customerR.findAll();
+	private CustomerRepository customerRepository;
+
+	@Override
+	public List<Customer> getAll() {
+		return customerRepository.findAll();
 	}
-	
-	@Transactional(readOnly = true)
+
+	@Override
 	public Customer getById(Integer id) throws ServicesException {
-		Optional<Customer> custommerOpt = customerR.findById(id);
+		Optional<Customer> custommerOpt = customerRepository.findById(id);
 		if (custommerOpt.isEmpty()) {
-			throw new ServicesException("No customer found");	
-		} 
+			throw new ServicesException("No customer found");
+		}
 		return custommerOpt.get();
 	}
-	 
+
 	@Transactional(readOnly = true)
-	 public List<Customer> getByName(String name) throws ServicesException{
-			if (null == name || name.isBlank()) {
-				throw new ServicesException("No valid name entered");
-			}		
-			List<Customer> customers = customerR.findByName(name);
-			return customers;
-			}
-	 @Transactional
-	 public void create (Customer customer) throws ServicesException{
-		 validateCustomer(customer);
-		 customerR.save(customer);
-	 }
-	 @Transactional
-	 public void update (Customer customer) throws ServicesException{
-		  if (null == customer || null == customer.getId()) {
+	public List<Customer> getByName(String name) throws ServicesException {
+		if (null == name || name.isBlank()) {
+			throw new ServicesException("No valid name entered");
+		}
+		List<Customer> customers = customerRepository.findByName(name);
+		return customers;
+	}
+
+	@Override
+	public void create(Customer customer) throws ServicesException {
+		validateCustomer(customer);
+		customerRepository.save(customer);
+	}
+
+	@Override
+	public void update(Customer customer) throws ServicesException {
+		if (null == customer || null == customer.getId()) {
 			throw new ServicesException("Invalid customer");
 		}
 		create(customer);
-		  
-	 }
-	 @Transactional
-	 public void delete (Integer id) throws ServicesException{
-		 Customer customer = getById(id);
-		 customer.setState(false);
-		 customerR.save(customer);
-	 }
-	 
-	 
-	  private void validateCustomer(Customer customer) throws ServicesException{
-		  super.validate(customer);
-			if (null == customer.getDirection() || customer.getDirection().isEmpty()) {
-				throw new ServicesException("No valid direction entered");
-			}
+
+	}
+
+	@Override
+	public void delete(Integer id) throws ServicesException {
+		Customer customer = getById(id);
+		customer.setState(false);
+		customerRepository.save(customer);
+	}
+
+	private void validateCustomer(Customer customer) throws ServicesException {
+		super.validate(customer);
+		if (null == customer.getDirection() || customer.getDirection().isEmpty()) {
+			throw new ServicesException("No valid direction entered");
+		}
 	}
 }

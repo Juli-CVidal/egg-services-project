@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import com.egg.services.entities.Offering;
 
 
-
 @Repository
 public interface OfferingRepository extends JpaRepository<Offering,Integer>{
 
@@ -20,6 +19,16 @@ public interface OfferingRepository extends JpaRepository<Offering,Integer>{
 	
 	@Query("SELECT o FROM Offering o WHERE o.serviceType = serviceType")
 	List<Offering> findByServiceType(@Param("serviceType") String serviceType);
+	
+	@Query("SELECT o FROM Offering o WHERE o.state = state")
+	List<Offering> findByState(@Param("state") Boolean state);
+	
+	
+	//NOT IMPLEMENTED YET - Get all offerings from a Supplier
+	/*
+	@Query("SELECT o FROM Offering o WHERE o.supplierId = id")
+	List<Offering> findBySupplier(@Param("supplierId") Integer id);
+	*/
 }
 
 

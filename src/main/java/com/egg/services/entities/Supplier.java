@@ -17,7 +17,7 @@ public final class Supplier extends Person {
 
 	@NotEmpty
 	@OneToMany
-	private List<Service> services;
+	private List<Offering> services;
 
 	@NotEmpty
 	@OneToMany
@@ -47,7 +47,7 @@ public final class Supplier extends Person {
 	private void initializeDefaults() {
 		this.state = true;
 		this.rol = Rol.SUPPLIER;
-		this.services = new ArrayList<Service>();
+		this.services = new ArrayList<Offering>();
 		this.reviews = new ArrayList<Review>();
 		this.scores = new ArrayList<Double>();
 	}

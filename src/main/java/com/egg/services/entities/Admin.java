@@ -2,6 +2,9 @@ package com.egg.services.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+import com.egg.services.enums.Rol;
+
 import lombok.Getter;
 import lombok.Setter;
 

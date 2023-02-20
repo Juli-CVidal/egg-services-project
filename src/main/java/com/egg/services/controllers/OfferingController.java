@@ -16,31 +16,26 @@ import com.egg.services.entities.Offering;
 import com.egg.services.exceptions.ServicesException;
 import com.egg.services.services.OfferingService;
 
-
 @Controller
 @RequestMapping("/offering")
-public class OfferingController {
-	
+public class OfferingController implements CrudController<Offering> {
+
 	@Autowired
 	private OfferingService offeringService;
 
-	
-	@GetMapping("/")
+	@Override
 	public String getAll(ModelMap model) {
-		List<Offering> offering = offeringService.getAll();
-		model.put("suppliers", offering);
+		List<Offering> offerings = offeringService.getAll();
+		model.put("offerings", offerings);
 		return "offerings-view";
 	}
-	
-	@GetMapping("/save")
-	
+
+	@Override
 	public String getForm(ModelMap model) {
 		return "offering-form";
 	}
-	
-	
-	 @PostMapping("/save")
-	
+
+	@Override
 	public String create(@Valid Offering offering, ModelMap model) {
 		try {
 			offeringService.create(offering);
@@ -49,14 +44,12 @@ public class OfferingController {
 			model.put("error", se.getMessage());
 			model.put("offering", offering);
 			return "offering-form";
-
 		}
 
 		return "redirect:/offering";
 	}
-	 
-	 
-	  @GetMapping("modify/{id}")
+
+	@Override
 	public String modify(@PathVariable Integer id, ModelMap model) {
 		try {
 			Offering offering = offeringService.getById(id);
@@ -67,22 +60,21 @@ public class OfferingController {
 		}
 		return "offering-form";
 	}
-	  
-	  @PostMapping("/modify")
-		public String modify(@Valid Offering offering, ModelMap model) {
-			try {
-				offeringService.update(offering);
-				model.put("success", "offering modified successfully");
-			} catch (ServicesException se) {
-				model.put("error", se.getMessage());
-				model.put("offering", offering);
-				return "offering-form";
-			}
-			return "redirect:/offering";
+
+	@Override
+	public String modify(@Valid Offering offering, ModelMap model) {
+		try {
+			offeringService.update(offering);
+			model.put("success", "offering modified successfully");
+		} catch (ServicesException se) {
+			model.put("error", se.getMessage());
+			model.put("offering", offering);
+			return "offering-form";
 		}
-	  
-	 
-	  @PostMapping("/delete/{id}")
+		return "redirect:/offering";
+	}
+
+	@Override
 	public String delete(@PathVariable("id") Integer id, ModelMap model) {
 		try {
 			offeringService.delete(id);
@@ -92,6 +84,5 @@ public class OfferingController {
 		}
 		return "redirect:/offering";
 	}
-	  
-	
+
 }

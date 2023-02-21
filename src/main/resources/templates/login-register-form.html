@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="layout/staticsFragments :: head">
+
+  </head>
+  <body>
+    <header th:replace="layout/staticsFragments :: navbar"></header>
+    <div
+      class="container position-absolute top-50 start-50 translate-middle shadow-lg p-2 mb-5 bg-body rounded border border-secondary"
+    >
+      <div class="mb-3">
+        <h2>Iniciar sesión</h2>
+        <form action="" method="post">
+          <label>Nombre de usuario:</label>
+          <input type="text" name="username" required /><br /><br />
+          <label>Contraseña:</label>
+          <input type="password" name="password" required /><br /><br />
+          <input type="submit" value="Iniciar sesión" />
+        </form>
+        <p>¿No tienes una cuenta? <a href="#registro">Regístrate aquí</a></p>
+      </div>
+      <div class="mb-3">
+        <a name="registro"></a>
+        <h2>Registro de usuario</h2>
+        <form action="" method="post">
+          <label>Nombre de usuario:</label>
+          <input type="text" name="username" required /><br /><br />
+          <label>Contraseña:</label>
+          <input type="password" name="password" required /><br /><br />
+          <input type="submit" value="Registrarse" />
+        </form>
+      </div>
+    </div>
+    <footer th:replace="layout/staticsFragments :: footer"></footer>
+  </body>
+</html>

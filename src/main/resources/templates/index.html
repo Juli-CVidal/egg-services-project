@@ -1,24 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head th:replace="layout/staticsFragments :: head">
-
 </head>
-
 <body>
 	<header th:replace="layout/staticsFragments :: navbar"></header>
+	
 	<main>
-		<div class="container">
-			
-				<h1>Bienvenido a nuestro sitio web</h1>
-				<p>Ofrecemos servicios de arreglos en domicilios. ¿Necesitas reparar algo en tu hogar? ¡Contáctanos!</p>
-				<form>
-					<label for="search">Buscar:</label>
-					<input type="text" id="search" name="search">
-					<button type="submit">Buscar</button>
-				</form>
-			
-		</div>
 		<div class="container">
 			<div class="d-flex justify-content-center">
 				<section class="indeximgs">
@@ -28,11 +15,10 @@
 					<img src="/img/pileta.jpg" alt="pileta">
 					<img src="/img/plomero.jpg" alt="plometo">
 				</section>
-
 			</div>
 		</div>
 	</main>
+	
 	<footer th:replace="layout/staticsFragments :: footer"></footer>
 </body>
-
 </html>

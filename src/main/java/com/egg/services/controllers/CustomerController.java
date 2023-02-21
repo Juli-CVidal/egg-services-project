@@ -16,7 +16,7 @@ public class CustomerController implements CrudController<Customer> {
 	 @Autowired
 	private CustomerService customerService;
 	 
-	
+	 
 	  public String getAll(ModelMap model) {
 		  
 		List<Customer> customers = customerService.getAll();
@@ -47,7 +47,6 @@ public class CustomerController implements CrudController<Customer> {
 		return "redirect:/customer";
 	}
 		 
-
 
 	@Override
 	public String modify(Integer id, ModelMap model) {

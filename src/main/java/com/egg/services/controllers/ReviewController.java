@@ -18,6 +18,7 @@ public class ReviewController implements CrudController<Review> {
 	
 	@Override
 	public String getAll(ModelMap model) {
+		
 		List<Review> reviews = reviewService.getAll();
 		model.put("reviews", reviews);
 		return "reviews-view";
@@ -25,11 +26,13 @@ public class ReviewController implements CrudController<Review> {
 
 	@Override
 	public String getForm(ModelMap model) {
+		
 		return "review-form";
 	}
 
 	@Override
 	public String create(@Valid Review review, ModelMap model) {
+		
 		try {
 			reviewService.create(review);
 			model.put("success", "review added successfully");

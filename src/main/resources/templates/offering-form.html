@@ -9,24 +9,26 @@
 <body>
 	<header th:replace="layout/staticsFragments :: navbar"></header>
 	<div
-		class="container position-absolute top-50 start-50 translate-middle shadow-lg p-2 mb-5 bg-body rounded border border-secondary">
+		class="container position-absolute top-50 start-50 translate-middle shadow-lg p-2 mb-5 bg-body rounded  border-secondary">
 		<form>
 			<input type="hidden" />
 			<div class="mb-3">
-				<label for="servicio">Tipo de servicio</label>
+				<label for="servicio">[[#{form.tipo.servicio}]]</label>
 				<select name="servicio" class="form-select">
 					<option selected>----</option>
-					<option value="Gasista">Gasista</option>
-					<option value="Plorero">Plomero</option>
-					<option value="Electricista">Electricista</option>
+					<option value="Gasista">[[#{form.gasista}]]</option>
+					<option value="Plorero">[[#{form.plomero}]]</option>
+					<option value="Electricista">[[#{form.electricista}]]</option>
 				</select>
 			</div>
 			<div class="mb-3">
-				<label for="cuerpoNoticia" class="form-label">Descripcion</label> <br>
+				<label for="cuerpoNoticia" class="form-label">[[#{form.descripcion}]]</label> <br>
 				<textarea name="cuerpo" type="text" class="form-control" id="cuerpoNoticia">
 					</textarea>
 			</div>
-			<button type="submit" class="btn btn-warning"> Cargar </button>
+			<div class="d-grid gap-2">
+               <button class="btn btn-warning" type="button">[[#{form.button}]]</button>
+           </div>
 		</form>
 		<br>
 	</div>

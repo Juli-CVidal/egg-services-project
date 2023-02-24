@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.egg.services.entities.Review;
 import com.egg.services.entities.Supplier;
 import com.egg.services.exceptions.ServicesException;
+import com.egg.services.repositories.ReviewRepository;
 import com.egg.services.repositories.SupplierRepository;
 
 @Service
@@ -17,11 +19,14 @@ public class SupplierService extends PersonService<Supplier> implements CrudServ
 	@Autowired
 	private SupplierRepository supplierRepository;
 
+	@Autowired
+	private ReviewRepository reviewRepository;
+
 	@Override
 	public List<Supplier> getAll() {
 		return supplierRepository.findAll();
 	}
-
+	
 	@Override
 	public Supplier getById(Integer id) throws ServicesException {
 		Optional<Supplier> supplierOpt = supplierRepository.findById(id);
@@ -42,6 +47,13 @@ public class SupplierService extends PersonService<Supplier> implements CrudServ
 		// Here, if the list has been returned empty, an exception can be thrown
 		// (if (suppliers.isEmpty()) {throw new ...})
 		return suppliers;
+	}
+
+	
+	@Transactional(readOnly = true)
+	public List<Review> getReviews(Review review, Supplier supplier) throws ServicesException {
+		List<Review> reviews = reviewRepository.getFromSupplier(supplier.getId());
+		return reviews;
 	}
 
 	@Override
@@ -78,10 +90,6 @@ public class SupplierService extends PersonService<Supplier> implements CrudServ
 		if (null == supplier.getReviews()) {
 			throw new ServicesException("The reviews list has not been created");
 		}
-		if (null == supplier.getScores()) {
-			throw new ServicesException("The scores list has not been created");
-		}
-
 		if (null == supplier.getBiography() || supplier.getBiography().isBlank()) {
 			throw new ServicesException("No valid biography entered");
 		}

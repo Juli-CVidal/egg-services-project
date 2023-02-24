@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.egg.services.entities.Review;
 import com.egg.services.entities.Supplier;
 import com.egg.services.exceptions.ServicesException;
 import com.egg.services.services.SupplierService;
@@ -33,6 +34,13 @@ public class SupplierController implements CrudController<Supplier> {
 		List<Supplier> suppliers = supplierService.getAll();
 		model.put("suppliers", suppliers);
 		return "suppliers-view";
+	}
+	
+	@PostMapping("/getReviewsSupplier")
+	public String getAllReviews(ModelMap model, Review review, Supplier supplier) throws ServicesException {
+		List<Review> reviews = supplierService.getReviews(review,supplier);
+		model.put("reviews", reviews);
+		return "supplierReviews-view";
 	}
 
 	@Override

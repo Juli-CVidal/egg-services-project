@@ -1,7 +1,10 @@
 package com.egg.services.entities;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,10 +26,17 @@ public class Review {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	@NotEmpty
+	private Double score;
 
-	@ManyToOne
-	@JoinColumn(name = "customer_id")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "customer.id")
 	private Customer customer;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "supplier.id")
+	private Supplier supplier;
 
 	@NotEmpty
 	private String content;
@@ -34,10 +44,12 @@ public class Review {
 	@Column(nullable = false, columnDefinition = "MEDIUMTEXT")
 	private String image;
 
-	public Review(Customer customer, @NotEmpty String content, String image) {
+	public Review(Customer customer, Supplier supplier, @NotEmpty String content, String image) {
 		this.customer = customer;
+		this.supplier = supplier;
 		this.content = content;
 		this.image = image;
 	}
 
 }
+

@@ -21,16 +21,14 @@ import lombok.Setter;
 public final class Supplier extends Person {
 
 	@OneToMany
-	@JoinColumn(name = "supplier_id")
+	@JoinColumn(name = "review_id")
 	private List<Review> reviews;
 
 
 	@OneToMany
-	@JoinColumn(name = "supplier_id")
+	@JoinColumn(name = "offering_id")
 	private List<Offering> offerings;
 
-	@NotEmpty
-	private ArrayList<Double> scores;
 
 	@NotEmpty
 	private Boolean state;
@@ -54,7 +52,7 @@ public final class Supplier extends Person {
 		this.rol = Rol.SUPPLIER;
 		this.offerings = new ArrayList<Offering>();
 		this.reviews = new ArrayList<Review>();
-		this.scores = new ArrayList<Double>();
 	}
 
 }
+

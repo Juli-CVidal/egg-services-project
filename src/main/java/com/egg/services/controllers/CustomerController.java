@@ -5,12 +5,18 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.egg.services.entities.Customer;
+import com.egg.services.entities.Review;
 import com.egg.services.exceptions.ServicesException;
 import com.egg.services.services.CustomerService;
 
+@Controller
+@RequestMapping("/customer")
 public class CustomerController implements CrudController<Customer> {
 
 	 @Autowired
@@ -23,7 +29,28 @@ public class CustomerController implements CrudController<Customer> {
 		model.put("customers", customers);
 		return "customers-view";
 	}
-
+	  @PostMapping("/getReviewsCustomer")
+	  public String getAllReviews(ModelMap model, Review review, Customer customer) throws ServicesException {
+			List<Review> reviews = customerService.getReviews(review, customer);
+			model.put("reviews", reviews);
+			return "customerReviews-view";
+		}
+	  
+	  @PostMapping("/saveReviewCustomer")
+	  public String createReview(ModelMap model, Review review, Customer customer) throws ServicesException{
+			
+			try {
+				customerService.createReview(review, customer);
+				model.put("success", "review added successfully");
+			}catch (ServicesException se) {
+				
+				model.put("error", se.getMessage());
+				model.put("review", review);
+				return "review-form";
+			}
+			
+			return "redirect:/customer";
+		}
 
 	@Override
 	public String getForm(ModelMap model) {

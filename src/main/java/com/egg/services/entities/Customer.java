@@ -1,6 +1,10 @@
 package com.egg.services.entities;
 
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
@@ -17,6 +21,11 @@ public final class Customer extends Person {
 
 	@NotEmpty
 	private String direction;
+	
+	
+	@OneToMany
+	@JoinColumn(name = "review_id")
+	private List<Review> reviews;
 
 	@NotEmpty
 	private boolean state;

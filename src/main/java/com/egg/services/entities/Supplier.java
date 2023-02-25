@@ -24,16 +24,14 @@ public final class Supplier extends Person {
 	@JoinColumn(name = "review_id")
 	private List<Review> reviews;
 
-
 	@OneToMany
 	@JoinColumn(name = "offering_id")
 	private List<Offering> offerings;
 
-
 	@NotEmpty
 	private Boolean state;
 
-	@NotBlank
+	@NotBlank(message = "Please tell us about you")
 	private String biography;
 
 	public Supplier() {
@@ -42,7 +40,7 @@ public final class Supplier extends Person {
 	}
 
 	public Supplier(String name, String lastname, String phoneNumber, String mail, String image, String password,
-			@NotBlank String biography) {
+			String biography) {
 		super(name, lastname, phoneNumber, mail, image, password, Rol.SUPPLIER);
 		initializeDefaults();
 	}
@@ -55,4 +53,3 @@ public final class Supplier extends Person {
 	}
 
 }
-

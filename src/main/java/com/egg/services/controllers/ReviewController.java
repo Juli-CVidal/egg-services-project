@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 
 import com.egg.services.entities.Review;
 import com.egg.services.exceptions.ServicesException;
@@ -31,7 +32,7 @@ public class ReviewController implements CrudController<Review> {
 	}
 
 	@Override
-	public String create(@Valid Review review, ModelMap model) {
+	public String create(@Valid Review review, ModelMap model, BindingResult result) {
 		
 		try {
 			reviewService.create(review);
@@ -59,7 +60,7 @@ public class ReviewController implements CrudController<Review> {
 	}
 
 	@Override
-	public String modify(@Valid Review review, ModelMap model) {
+	public String modify(@Valid Review review, ModelMap model, BindingResult result) {
 		
 		 try {
 			reviewService.update(review);

@@ -3,6 +3,8 @@ package com.egg.services.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +16,7 @@ import com.egg.services.repositories.ReviewRepository;
 import com.egg.services.repositories.SupplierRepository;
 
 @Service
-public class SupplierService extends PersonService<Supplier> implements CrudService<Supplier> {
+public class SupplierService implements CrudService<Supplier> {
 
 	@Autowired
 	private SupplierRepository supplierRepository;
@@ -51,8 +53,8 @@ public class SupplierService extends PersonService<Supplier> implements CrudServ
 
 	
 	@Transactional(readOnly = true)
-	public List<Review> getReviews(Review review, Supplier supplier) throws ServicesException {
-		List<Review> reviews = reviewRepository.getFromSupplier(supplier.getId());
+	public List<Review> getReviews(Integer supplierId) throws ServicesException {
+		List<Review> reviews = reviewRepository.getFromSupplier(supplierId);
 		return reviews;
 	}
 
@@ -64,9 +66,6 @@ public class SupplierService extends PersonService<Supplier> implements CrudServ
 
 	@Override
 	public void update(Supplier supplier) throws ServicesException {
-		if (null == supplier || null == supplier.getId()) {
-			throw new ServicesException("Invalid supplier");
-		}
 
 		// The create method does not create another entry if two entries
 		// share the same id
@@ -83,15 +82,8 @@ public class SupplierService extends PersonService<Supplier> implements CrudServ
 	}
 
 	private void validateSupplier(Supplier supplier) throws ServicesException {
-		super.validate(supplier);
-		if (null == supplier.getOfferings()) {
-			throw new ServicesException("The offerings list has not been created");
-		}
-		if (null == supplier.getReviews()) {
-			throw new ServicesException("The reviews list has not been created");
-		}
-		if (null == supplier.getBiography() || supplier.getBiography().isBlank()) {
-			throw new ServicesException("No valid biography entered");
+		if (null == supplier || null == supplier.getId()) {
+			throw new ServicesException("Invalid supplier");
 		}
 	}
 }

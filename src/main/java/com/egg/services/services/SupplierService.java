@@ -53,7 +53,7 @@ public class SupplierService implements CrudService<Supplier> {
 
 	
 	@Transactional(readOnly = true)
-	public List<Review> getReviews(Review review, Integer supplierId) throws ServicesException {
+	public List<Review> getReviews(Integer supplierId) throws ServicesException {
 		List<Review> reviews = reviewRepository.getFromSupplier(supplierId);
 		return reviews;
 	}

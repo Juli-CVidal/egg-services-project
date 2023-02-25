@@ -3,8 +3,6 @@ package com.egg.services.services;
 import java.util.List;
 import java.util.Optional;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,13 +46,13 @@ public class CustomerService implements CrudService<Customer> {
 	}
 
 	@Transactional(readOnly = true)
-	public List<Review> getReviews( Review review, Customer customer) throws ServicesException {
-		List<Review> reviews = reviewRepository.getFromSupplier(customer.getId());
+	public List<Review> getReviews(Integer id) throws ServicesException {
+		List<Review> reviews = reviewRepository.getFromSupplier(id);
 		return reviews;
 	}
 
 	@Transactional
-	public void createReview( Review review, Customer customer) throws ServicesException {
+	public void createReview(Review review, Customer customer) throws ServicesException {
 		validateCustomer(customer);
 
 		review.setCustomer(customer);
@@ -66,12 +64,12 @@ public class CustomerService implements CrudService<Customer> {
 	}
 
 	@Override
-	public void create( Customer customer) throws ServicesException {
+	public void create(Customer customer) throws ServicesException {
 		customerRepository.save(customer);
 	}
 
 	@Override
-	public void update( Customer customer) throws ServicesException {
+	public void update(Customer customer) throws ServicesException {
 		validateCustomer(customer);
 		create(customer);
 
@@ -84,7 +82,7 @@ public class CustomerService implements CrudService<Customer> {
 		customerRepository.save(customer);
 	}
 
-	private void validateCustomer( Customer customer) throws ServicesException {
+	private void validateCustomer(Customer customer) throws ServicesException {
 		if (null == customer || null == customer.getId()) {
 			throw new ServicesException("Invalid customer");
 		}

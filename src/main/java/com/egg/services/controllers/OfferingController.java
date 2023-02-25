@@ -7,9 +7,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.egg.services.entities.Offering;
@@ -36,7 +35,7 @@ public class OfferingController implements CrudController<Offering> {
 	}
 
 	@Override
-	public String create(@Valid Offering offering, ModelMap model) {
+	public String create(@Valid Offering offering, ModelMap model, BindingResult result) {
 		try {
 			offeringService.create(offering);
 			model.put("success", "offering added successfully");
@@ -62,7 +61,7 @@ public class OfferingController implements CrudController<Offering> {
 	}
 
 	@Override
-	public String modify(@Valid Offering offering, ModelMap model) {
+	public String modify(@Valid Offering offering, ModelMap model, BindingResult result) {
 		try {
 			offeringService.update(offering);
 			model.put("success", "offering modified successfully");

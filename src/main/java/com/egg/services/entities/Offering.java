@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import lombok.Getter;
 
@@ -29,17 +30,17 @@ public class Offering {
 	@NotEmpty
 	private Boolean state;
 
-	@NotEmpty
+	@NotBlank(message = "No type entered")
 	private String serviceType;
 
-	@NotEmpty
+	@NotBlank(message = "No description enteredf")
 	private String description;
 	
 	public Offering() {
 		this.state = true;
 	}
 
-	public Offering( @NotEmpty String serviceType, @NotEmpty String description) {
+	public Offering(String serviceType, String description) {
 		super();
 		this.state = true;
 		this.serviceType = serviceType;

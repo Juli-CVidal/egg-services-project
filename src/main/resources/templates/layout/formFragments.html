@@ -1,111 +1,161 @@
 <!-- SIGN UP FORM -->
-<div th:fragment="sign-up-form" class="col-md-4 p-5 shadow-sm border rounded-5 border-black">
-        <h2 class="text-center mb-4 text-black">Create An Account</h2>
-        <form method="POST" class="needs-validation" novalidate>
-          <div class="row mb-3">
-            <div class="col">
-              <label for="username" class="form-label">Nombre</label>
-              <input
-                type="text"
-                id="username"
-                name="username"
-                class="form-control border border-black"
-                autocomplete="off"
-                required
-              />
-              <div class="invalid-feedback">Ingrese su nombre</div>
-            </div>
-            <div class="col">
-              <label for="lastname" class="form-label">Apellido</label>
-              <input
-                type="text"
-                id="lastname"
-                name="lastname"
-                class="form-control border border-black"
-                autocomplete="off"
-                required
-              />
-              <div class="invalid-feedback">Ingrese su apellido</div>
-            </div>
-          </div>
-          <div class="col mb-3">
-            <label for="email" class="form-label">Mail:</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              class="form-control border border-black"
-              required
-            />
-            <div class="invalid-feedback">nombre@dominio.com</div>
-          </div>
-
-          <div class="row mb-3">
-            <div class="col">
-              <label for="username" class="form-label">Contraseña</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                class="form-control border border-black"
-                placeholder="Mínimo 8 caracteres"
-                autocomplete="off"
-                required
-              />
-            </div>
-            <div class="col">
-              <label for="repeat" class="form-label">Repetir</label>
-              <input
-                type="password"
-                id="repeat"
-                name="repeat"
-                class="form-control border border-black"
-                autocomplete="off"
-                required
-              />
-              <div class="invalid-feedback">
-                Las contraseñas deben ser iguales
-              </div>
-            </div>
-          </div>
-
-          <div class="d-flex flex-column justify-content-center mb-3">
-            <div class="mx-auto">
-              <label for="account-type" class="form-label"
-                >Eres un Supplier?</label
-              >
-            </div>
-            <div class="mx-auto">
-              <select
-                name="account-type"
-                id="account-type"
-                class="form-select"
-                required
-              >
-                <option value="" disabled selected>Seleccione</option>
-                <option value="SUPPLIER">Si</option>
-                <option value="CUSTOMER">No</option>
-              </select>
-            </div>
-          </div>
-          <div class="row" id="by-type"></div>
-
-          <div class="d-grid">
-            <button class="btn btn-primary" type="submit">
-              [[#{login.form.ingresar}]]
-            </button>
-          </div>
-        </form>
-        <script th:src="@{../js/sign_up_form.js}"></script>
-        <div class="mb-3">
-          <p class="mb-0 text-center">
-            [[#{login.form.sin.cuenta}]]<a
-              href="login.html"
-              class="text-primary fw-bold"
-              >[[#{login.form.crear.cuenta}]]</a
-            >
-          </p>
-        </div>
+<div
+  th:fragment="sign-up-form"
+  class="col-md-4 p-5 shadow-sm border rounded-5 border-black"
+>
+  <p th:if="${accountType}" id="accountType" th:text="${accountType}" class="d-none"></p> <!-- Here I can obtain the previous type -->
+  <h2 class="text-center mb-4 text-black">Create An Account</h2>
+  <form method="POST" class="needs-validation" novalidate>
+    <div class="row mb-3">
+      <div class="col">
+        <label for="username" class="form-label">Nombre</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          class="form-control border border-black"
+          autocomplete="off"
+          required
+        />
+        <div class="invalid-feedback">Ingrese su nombre</div>
       </div>
-      
-      
+      <div class="col">
+        <label for="lastname" class="form-label">Apellido</label>
+        <input
+          type="text"
+          id="lastname"
+          name="lastname"
+          class="form-control border border-black"
+          autocomplete="off"
+          required
+        />
+        <div class="invalid-feedback">Ingrese su apellido</div>
+      </div>
+    </div>
+    <div class="col mb-3">
+      <label for="email" class="form-label">Mail:</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        class="form-control border border-black"
+        required
+      />
+      <div class="invalid-feedback">nombre@dominio.com</div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col">
+        <label for="username" class="form-label">Contraseña</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          class="form-control border border-black"
+          placeholder="Mínimo 8 caracteres"
+          autocomplete="off"
+          required
+        />
+      </div>
+      <div class="col">
+        <label for="repeat" class="form-label">Repetir</label>
+        <input
+          type="password"
+          id="repeat"
+          name="repeat"
+          class="form-control border border-black"
+          autocomplete="off"
+          required
+        />
+        <div class="invalid-feedback">Las contraseñas deben ser iguales</div>
+      </div>
+    </div>
+
+    <div class="d-flex flex-column justify-content-center mb-3">
+      <div class="mx-auto">
+        <label for="account_type" class="form-label">Eres un Supplier?</label>
+      </div>
+      <div class="mx-auto">
+        <select
+          name="account-type"
+          id="account-type"
+          class="form-select"
+          required
+        >
+          <option value="" disabled selected>Seleccione</option>
+          <option value="SUPPLIER">Si</option>
+          <option value="CUSTOMER">No</option>
+        </select>
+      </div>
+    </div>
+    <div id="supplier" class="row mb-3 d-none">
+    <!-- SUPPLIER -->
+      <label for="description" class="form-label">Cuéntenos sobre usted</label>
+      <textarea
+        name="description"
+        id="description"
+        class="form-control"
+        required
+      ></textarea>
+    </div>
+    <div id="customer" class="row d-none">
+    <!-- CUSTOMER -->
+      <div class="col mb-3">
+        <label for="street" class="form-label">Ingrese su calle</label>
+        <input
+          type="text"
+          id="street"
+          name="street"
+          class="form-control border border-black"
+          autocomplete="off"
+          required
+        />
+      </div>
+      <div class="col mb-3">
+        <label for="number" class="form-label">Y su altura</label>
+        <input
+          type="number"
+          id="number"
+          name="number"
+          class="form-control border border-black"
+          autocomplete="off"
+          min="0"
+          required
+        />
+      </div>
+      <div class="d-flex justify-content-center mb-3">
+        <select
+          name="neighborhood"
+          id="neighborhood"
+          class="form-select w-50"
+          required
+        >
+          <option value="" disabled selected>Barrio</option>
+          <option value="BARRIO1">Barrio1</option>
+          <option value="BARRIO2">Barrio2</option>
+        </select>
+      </div>
+    </div>
+    <div class="d-grid">
+      <button class="btn btn-primary" type="submit">
+        [[#{login.form.ingresar}]]
+      </button>
+    </div>
+  </form>
+  <script th:src="@{../js/sign_up_form.js}"></script> 
+  <div class="mb-3">
+    <p class="mb-0 text-center">
+      [[#{login.form.sin.cuenta}]]<a
+        href="login.html"
+        class="text-primary fw-bold"
+        >[[#{login.form.crear.cuenta}]]</a
+      >
+    </p>
+  </div>
+  <div th:if="${success}" class="alert alert-success" role="alert">
+    <span th:text="${success}"></span>
+  </div>
+  <div th:if="${error}" class="alert alert-danger" role="alert">
+    <span th:text="${error}"></span>
+  </div>
+</div>

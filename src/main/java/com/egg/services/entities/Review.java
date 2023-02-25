@@ -1,7 +1,4 @@
 package com.egg.services.entities;
-
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,6 +27,7 @@ public class Review {
 	private Integer id;
 	
 	@NotEmpty
+	@Size(min = 1, max = 5, message = "Please enter a valid score")
 	private Double score;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -44,7 +44,7 @@ public class Review {
 	@Column(nullable = false, columnDefinition = "MEDIUMTEXT")
 	private String image;
 
-	public Review(Customer customer, Supplier supplier, @NotEmpty String content, String image) {
+	public Review(Customer customer, Supplier supplier,  String content, String image) {
 		this.customer = customer;
 		this.supplier = supplier;
 		this.content = content;

@@ -10,7 +10,9 @@ import javax.persistence.Inheritance;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 import com.egg.services.enums.Rol;
 
@@ -30,35 +32,32 @@ public abstract class Person {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Integer id;
 
-	@NotEmpty
+	@NotBlank(message = "No valid name entered")
 	protected String name;
 
-	@NotEmpty
+	@NotBlank(message = "No lastName name entered")
 	protected String lastname;
 
-	@NotEmpty
-	protected String phoneNumber;
-
-	@NotEmpty
-	@Email
+	@NotBlank(message = "No valid name entered")
+	@Email(message = "The mail must be name@domain.com")
 	protected String mail;
 
-	@Column(nullable = false, columnDefinition="MEDIUMTEXT")
+	@Column(columnDefinition="MEDIUMTEXT")
 	protected String image;
 
-	@NotEmpty
+	@NotBlank(message = "Invalid password")
+	@Size(min = 8, message = "The password has to be at least 8 chars")
 	protected String password;
 
 	@NotEmpty
 	@Enumerated(EnumType.STRING)
 	protected Rol rol;
 
-	public Person(@NotEmpty String name, @NotEmpty String lastname, @NotEmpty String phoneNumber,
-			@NotEmpty @Email String mail, String image, @NotEmpty String password, @NotEmpty Rol rol) {
+	public Person(String name,String lastname, String phoneNumber,
+			String mail, String image, String password, Rol rol) {
 		super();
 		this.name = name;
 		this.lastname = lastname;
-		this.phoneNumber = phoneNumber;
 		this.mail = mail;
 		this.image = image;
 		this.password = password;

@@ -47,6 +47,7 @@ implements CrudController<Supplier> {
 	// ============= CREATE =============
 
 	@Override
+	@GetMapping("/new-supplier")
 	public String getForm(ModelMap model) {
 		return super.getForm(model);
 	}

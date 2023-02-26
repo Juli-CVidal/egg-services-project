@@ -29,7 +29,7 @@ public class AccountController<T extends Person> {
 	public String getForm(ModelMap model) {
 		model.put("accountType", accountType);
 		model.put("form_name", "sign-up-form");
-		return "redirect:/sign_up";
+		return "form-basic.html";
 	}
 
 	// CREATE PROFILE

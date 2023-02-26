@@ -1,4 +1,5 @@
-const accountType = document.getElementById("account-type");
+const ACCOUNT_SELECT = document.getElementById("account-select");
+const previousType = document.getElementById("accountType");
 const form = document.querySelector(".needs-validation");
 const SUPPLIER_DIV = document.getElementById("supplier")
 const SUPPLIER_FIELDS = SUPPLIER_DIV.innerHTML
@@ -55,11 +56,12 @@ function enterFields(type){
 			SUPPLIER_DIV.innerHTML = '';
 			CUSTOMER_DIV.innerHTML = CUSTOMER_FIELDS;
 		}
+	form.setAttribute("th:action", "/save");
 }
 
 
 function detectSelect() {
-	accountType.addEventListener("change", (event) => {
+	ACCOUNT_SELECT.addEventListener("change", (event) => {
 		enterFields(event.target.value);
 	});
 }
@@ -75,8 +77,8 @@ function initFields(){
 function checkPreviousType(){
 	const element = document.getElementById("accountType")?.innerHTML;
 	if (element){
-		enterFields(element);
-		accountType.value = element;
+		enterFields(element.toLocaleUpperCase());
+		ACCOUNT_SELECT.value = element.toUpperCase();
 	}
 }
 

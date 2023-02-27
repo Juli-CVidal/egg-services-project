@@ -36,6 +36,7 @@ public class Offering {
 	@NotBlank(message = "No description enteredf")
 	private String description;
 	
+	
 	public Offering() {
 		this.state = true;
 	}

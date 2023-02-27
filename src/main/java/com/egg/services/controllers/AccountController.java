@@ -29,6 +29,7 @@ public class AccountController<T extends Person> {
 	public String getForm(ModelMap model) {
 		model.put("accountType", accountType);
 		model.put("form_name", "sign-up-form");
+		model.put("object", accountType == "customer"? new Customer() : new Supplier());
 		return "form-basic.html";
 	}
 

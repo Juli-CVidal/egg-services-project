@@ -27,6 +27,7 @@ public final class Supplier extends Person {
 	@OneToMany
 	@JoinColumn(name = "offering_id")
 	private List<Offering> offerings;
+	
 
 	@NotEmpty
 	private Boolean state;

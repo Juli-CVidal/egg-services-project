@@ -11,21 +11,21 @@
 		<form>
 			<input type="hidden" />
 			<div class="mb-3">
-				<label for="servicio">[[#{form.tipo.servicio}]]</label>
+				<label for="servicio">[[#{offering.form.tipo.servicio}]]</label>
 				<select name="servicio" class="form-select">
 					<option selected>----</option>
-					<option value="Gasista">[[#{form.gasista}]]</option>
-					<option value="Plorero">[[#{form.plomero}]]</option>
-					<option value="Electricista">[[#{form.electricista}]]</option>
+					<option value="Gasista">[[#{offering.form.gasista}]]</option>
+					<option value="Plorero">[[#{offering.form.plomero}]]</option>
+					<option value="Electricista">[[#{offering.form.electricista}]]</option>
 				</select>
 			</div>
 			<div class="mb-3">
-				<label for="cuerpoNoticia" class="form-label">[[#{form.descripcion}]]</label> <br>
+				<label for="cuerpoNoticia" class="form-label">[[#{offering.form.descripcion}]]</label> <br>
 				<textarea name="cuerpo" type="text" class="form-control" id="cuerpoNoticia">
 					</textarea>
 			</div>
 			<div class="d-grid gap-2">
-               <button class="btn btn-warning" type="button">[[#{form.button}]]</button>
+               <button class="btn btn-warning" type="button">[[#{offering.form.button}]]</button>
            </div>
 		</form>
 		<br>

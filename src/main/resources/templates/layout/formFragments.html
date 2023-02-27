@@ -4,11 +4,11 @@
   class="col-md-4 p-5 shadow-sm border rounded-5 border-black"
 >
   <p th:if="${accountType}" id="accountType" th:text="${accountType}" class="d-none"></p> <!-- Here I can obtain the previous type -->
-  <h2 class="text-center mb-4 text-black">Create An Account</h2>
+  <h2 class="text-center mb-4 text-black">[[#{signup.form.crear}]]</h2>
   <form method="POST" class="needs-validation" novalidate>
     <div class="row mb-3">
       <div class="col">
-        <label for="username" class="form-label">Nombre</label>
+        <label for="username" class="form-label">[[#{signup.form.nombre}]]</label>
         <input
           type="text"
           id="username"
@@ -17,10 +17,10 @@
           autocomplete="off"
           required
         />
-        <div class="invalid-feedback">Ingrese su nombre</div>
+        <div class="invalid-feedback">[[#{signup.form.nombre.error}]]</div>
       </div>
       <div class="col">
-        <label for="lastname" class="form-label">Apellido</label>
+        <label for="lastname" class="form-label">[[#{signup.form.apellido}]]</label>
         <input
           type="text"
           id="lastname"
@@ -29,11 +29,11 @@
           autocomplete="off"
           required
         />
-        <div class="invalid-feedback">Ingrese su apellido</div>
+        <div class="invalid-feedback">[[#{signup.form.apellido.error}]]</div>
       </div>
     </div>
     <div class="col mb-3">
-      <label for="email" class="form-label">Mail:</label>
+      <label for="email" class="form-label">[[#{signup.form.mail}]]</label>
       <input
         type="email"
         id="email"
@@ -41,24 +41,24 @@
         class="form-control border border-black"
         required
       />
-      <div class="invalid-feedback">nombre@dominio.com</div>
+      <div class="invalid-feedback">[[#{signup.form.mail.error}]]</div>
     </div>
 
     <div class="row mb-3">
       <div class="col">
-        <label for="username" class="form-label">Contraseña</label>
+        <label for="username" class="form-label">[[#{signup.form.contra}]]</label>
         <input
           type="password"
           id="password"
           name="password"
           class="form-control border border-black"
-          placeholder="Mínimo 8 caracteres"
+          th:placeholder="#{signup.form.contra.placeholder}"
           autocomplete="off"
           required
         />
       </div>
       <div class="col">
-        <label for="repeat" class="form-label">Repetir</label>
+        <label for="repeat" class="form-label">[[#{signup.form.contra.repetir}]]</label>
         <input
           type="password"
           id="repeat"
@@ -67,13 +67,13 @@
           autocomplete="off"
           required
         />
-        <div class="invalid-feedback">Las contraseñas deben ser iguales</div>
+        <div class="invalid-feedback">[[#{signup.form.contra.error}]]</div>
       </div>
     </div>
 
     <div class="d-flex flex-column justify-content-center mb-3">
       <div class="mx-auto">
-        <label for="account-type" class="form-label">Eres un Supplier?</label>
+        <label for="account-type" class="form-label">[[#{signup.form.proveedor}]]</label>
       </div>
       <div class="mx-auto">
         <select
@@ -82,15 +82,15 @@
           class="form-select"
           required
         >
-          <option value="" disabled selected>Seleccione</option>
-          <option value="SUPPLIER">Si</option>
-          <option value="CUSTOMER">No</option>
+          <option value="" disabled selected>[[#{signup.form.seleccione}]]</option>
+          <option value="SUPPLIER">[[#{signup.form.si}]]</option>
+          <option value="CUSTOMER">[[#{signup.form.no}]]</option>
         </select>
       </div>
     </div>
     <div id="supplier" class="row mb-3 d-none">
     <!-- SUPPLIER -->
-      <label for="description" class="form-label">Cuéntenos sobre usted</label>
+      <label for="description" class="form-label">[[#{signup.form.cuentenos}]]</label>
       <textarea
         name="description"
         id="description"
@@ -101,7 +101,7 @@
     <div id="customer" class="row d-none">
     <!-- CUSTOMER -->
       <div class="col mb-3">
-        <label for="street" class="form-label">Ingrese su calle</label>
+        <label for="street" class="form-label">[[#{signup.form.calle}]]</label>
         <input
           type="text"
           id="street"
@@ -112,7 +112,7 @@
         />
       </div>
       <div class="col mb-3">
-        <label for="number" class="form-label">Y su altura</label>
+        <label for="number" class="form-label">[[#{signup.form.altura}]]</label>
         <input
           type="number"
           id="number"
@@ -130,25 +130,26 @@
           class="form-select w-50"
           required
         >
-          <option value="" disabled selected>Barrio</option>
-          <option value="BARRIO1">Barrio1</option>
-          <option value="BARRIO2">Barrio2</option>
+          <option value="" disabled selected>[[#{signup.barrio}]]</option>
+          <option value="BARRIO1">[[#{signup.barrio.1}]]</option>
+          <option value="BARRIO2">[[#{signup.barrio.2}]]</option>
+          <option value="BARRIO2">[[#{signup.barrio.3}]]</option>
         </select>
       </div>
     </div>
     <div class="d-grid">
       <button class="btn btn-primary" type="submit">
-        [[#{login.form.ingresar}]]
+        [[#{signup.ingresar}]]
       </button>
     </div>
   </form>
   <script th:src="@{../js/sign_up_form.js}"></script> 
-  <div class="mb-3">
+  <div class="mb-3 mt-3">
     <p class="mb-0 text-center">
-      [[#{login.form.sin.cuenta}]]<a
-        href="login.html"
-        class="text-primary fw-bold"
-        >[[#{login.form.crear.cuenta}]]</a
+      [[#{signup.tiene.cuenta}]]<a
+        th:href="@{/login}"
+        class="text-primary fw-bold "
+        > [[#{signup.ingresa.aqui}]]</a
       >
     </p>
   </div>

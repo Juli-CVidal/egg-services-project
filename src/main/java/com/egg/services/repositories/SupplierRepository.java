@@ -16,9 +16,7 @@ public interface SupplierRepository extends JpaRepository<Supplier, Integer> {
 	Optional<Supplier> findById(@Param("id") Integer id);
 
 	@Query("SELECT s FROM Supplier s WHERE s.name = name")
-	// At this moment, the name is not an unique field
-	// otherwise, change to Optional<Supplier>
-	List<Supplier> findByName(@Param("name") String name);
+	Supplier findByName(@Param("name") String name);
 
 	@Query("SELECT s FROM Supplier s WHERE s.state = state")
 	List<Supplier> findByState(@Param("state") Boolean state);

@@ -5,13 +5,16 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.egg.services.entities.Review;
 import com.egg.services.exceptions.ServicesException;
 import com.egg.services.services.ReviewService;
-
+@Controller
+@RequestMapping("/review")
 public class ReviewController implements CrudController<Review> {
 
 	@Autowired

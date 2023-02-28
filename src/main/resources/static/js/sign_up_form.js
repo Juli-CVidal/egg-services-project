@@ -2,9 +2,9 @@ const ACCOUNT_SELECT = document.getElementById("account-select");
 const previousType = document.getElementById("accountType");
 const form = document.querySelector(".needs-validation");
 const SUPPLIER_DIV = document.getElementById("supplier")
-const SUPPLIER_FIELDS = SUPPLIER_DIV.innerHTML
+const SUPPLIER_FIELDS = SUPPLIER_DIV.cloneNode(true);
 const CUSTOMER_DIV = document.getElementById("customer")
-const CUSTOMER_FIELDS = CUSTOMER_DIV.innerHTML
+const CUSTOMER_FIELDS = CUSTOMER_DIV.cloneNode(true);
 
 function validatePassword() {
 	const password = document.getElementById("password");
@@ -48,15 +48,27 @@ function addValidation() {
 	})();
 }
 
-function enterFields(type){
+function enterThFields(type) {
+	let div = type == "SUPPLIER" ? SUPPLIER_FIELDS : CUSTOMER_FIELDS;
+	const inputs = type == "SUPPLIER" ? div.getElementsByTagName("textarea") : div.getElementsByTagName("input");
+	for (let input of inputs){
+		console.log(input)
+		input.setAttribute("th:field", "*{" + input.id + "}");
+	}
+}
+
+function enterFields(type) {
+	enterThFields(type);
 	if (type === 'SUPPLIER') {
-			CUSTOMER_DIV.innerHTML = '';
-			SUPPLIER_DIV.innerHTML = SUPPLIER_FIELDS;
-		} else if (type === 'CUSTOMER') {
-			SUPPLIER_DIV.innerHTML = '';
-			CUSTOMER_DIV.innerHTML = CUSTOMER_FIELDS;
-		}
+		CUSTOMER_DIV.innerHTML = '';
+		SUPPLIER_DIV.innerHTML = SUPPLIER_FIELDS.innerHTML;
+	} else if (type === 'CUSTOMER') {
+		SUPPLIER_DIV.innerHTML = '';
+		CUSTOMER_DIV.innerHTML = CUSTOMER_FIELDS.innerHTML;
+	}
+	form.setAttribute("th:object", "${" + type.toLowerCase() + "}")
 	form.setAttribute("th:action", "/save");
+	
 }
 
 
@@ -66,17 +78,17 @@ function detectSelect() {
 	});
 }
 
-function initFields(){
+function initFields() {
 	SUPPLIER_DIV.classList.remove("d-none");
 	CUSTOMER_DIV.classList.remove("d-none");
 	SUPPLIER_DIV.innerHTML = "";
 	CUSTOMER_DIV.innerHTML = "";
-	
+
 }
 
-function checkPreviousType(){
+function checkPreviousType() {
 	const element = document.getElementById("accountType")?.innerHTML;
-	if (element){
+	if (element) {
 		enterFields(element.toLocaleUpperCase());
 		ACCOUNT_SELECT.value = element.toUpperCase();
 	}

@@ -29,20 +29,22 @@ public class CustomerService implements CrudService<Customer> {
 
 	@Override
 	public Customer getById(Integer id) throws ServicesException {
-		Optional<Customer> custommerOpt = customerRepository.findById(id);
-		if (custommerOpt.isEmpty()) {
-			throw new ServicesException("No customer found");
-		}
-		return custommerOpt.get();
+		Optional<Customer> customerOpt = customerRepository.findById(id);
+		return getFromOptional(customerOpt);
 	}
 
+	
 	@Transactional(readOnly = true)
-	public List<Customer> getByName(String name) throws ServicesException {
+	public Customer getByName(String name) throws ServicesException {
 		if (null == name || name.isBlank()) {
 			throw new ServicesException("No valid name entered");
 		}
-		List<Customer> customers = customerRepository.findByName(name);
-		return customers;
+		Customer customer = customerRepository.findByName(name);
+		
+		if (null == customer) {
+			throw new ServicesException("No customer found");
+		}
+		return customer;
 	}
 
 	@Transactional(readOnly = true)
@@ -80,6 +82,13 @@ public class CustomerService implements CrudService<Customer> {
 		Customer customer = getById(id);
 		customer.setState(false);
 		customerRepository.save(customer);
+	}
+	
+	private Customer getFromOptional(Optional<Customer> customerOpt) throws ServicesException{
+		if (customerOpt.isEmpty()) {
+			throw new ServicesException("No customer found");
+		}
+		return customerOpt.get();
 	}
 
 	private void validateCustomer(Customer customer) throws ServicesException {

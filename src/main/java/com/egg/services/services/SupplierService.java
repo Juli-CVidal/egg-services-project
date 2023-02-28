@@ -3,7 +3,6 @@ package com.egg.services.services;
 import java.util.List;
 import java.util.Optional;
 
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,23 +31,19 @@ public class SupplierService implements CrudService<Supplier> {
 	@Override
 	public Supplier getById(Integer id) throws ServicesException {
 		Optional<Supplier> supplierOpt = supplierRepository.findById(id);
-		if (supplierOpt.isEmpty()) {
-			throw new ServicesException("No supplier found");
-		}
-		return supplierOpt.get();
+		return getFromOptional(supplierOpt);
 	}
 
-	// If the field name is unique, change to public Supplier ...
-	// And manage the logic the same way
 	@Transactional(readOnly = true)
-	public List<Supplier> getByName(String name) throws ServicesException {
+	public Supplier getByName(String name) throws ServicesException {
 		if (null == name || name.isBlank()) {
 			throw new ServicesException("No valid name entered");
 		}
-		List<Supplier> suppliers = supplierRepository.findByName(name);
-		// Here, if the list has been returned empty, an exception can be thrown
-		// (if (suppliers.isEmpty()) {throw new ...})
-		return suppliers;
+		Supplier supplier= supplierRepository.findByName(name);
+		if (null == supplier) {
+			throw new ServicesException("No supplier found");
+		}
+		return supplier;
 	}
 
 	
@@ -60,16 +55,11 @@ public class SupplierService implements CrudService<Supplier> {
 
 	@Override
 	public void create(Supplier supplier) throws ServicesException {
-		validateSupplier(supplier);
 		supplierRepository.save(supplier);
 	}
 
 	@Override
 	public void update(Supplier supplier) throws ServicesException {
-
-		// The create method does not create another entry if two entries
-		// share the same id
-		// If this happens, the new one will replace the old one
 		create(supplier);
 	}
 
@@ -81,9 +71,11 @@ public class SupplierService implements CrudService<Supplier> {
 		supplierRepository.save(supplier);
 	}
 
-	private void validateSupplier(Supplier supplier) throws ServicesException {
-		if (null == supplier || null == supplier.getId()) {
-			throw new ServicesException("Invalid supplier");
+
+	private Supplier getFromOptional(Optional<Supplier> supplierOpt) throws ServicesException{
+		if (supplierOpt.isEmpty()) {
+			throw new ServicesException("No supplier found");
 		}
+		return supplierOpt.get();
 	}
 }

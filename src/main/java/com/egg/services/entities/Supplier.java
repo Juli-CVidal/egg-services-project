@@ -14,9 +14,9 @@ import com.egg.services.enums.Rol;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
 @Getter
 @Setter
+@Entity
 @Table(name = "supplier")
 public final class Supplier extends Person {
 
@@ -28,7 +28,6 @@ public final class Supplier extends Person {
 	@JoinColumn(name = "offering_id")
 	private List<Offering> offerings;
 
-	@NotEmpty
 	private Boolean state;
 
 	@NotBlank(message = "Please tell us about you")

@@ -44,6 +44,16 @@ public class SupplierController extends AccountController<Supplier>{
 		model.put("reviews", reviews);
 		return "supplierReviews-view";
 	}
+	
+	@GetMapping("/profile/{id}")
+	public String getProfile(@PathVariable("id")Integer id, ModelMap model) throws ServicesException {
+		Supplier supplier = supplierService.getById(id);
+		if (null == supplier) {
+			throw new ServicesException("No supplier found");
+		}
+		model.put("supplier", supplier);
+		return "supplier-profile";
+	}
 
 	// ============= CREATE =============
 

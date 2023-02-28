@@ -15,7 +15,6 @@
 	<!-- STYLE CSS -->
 	<link rel="stylesheet" href="./css/style.css" />
 	<!-- REMIX ICONS CDN -->
-	    
 	<link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
 </head>
 
@@ -37,7 +36,7 @@
 						</li>
 						<li class="nav-item">
 							<a sec:authorize="isAuthenticated()" class="nav-link"
-								href="#">[[#{navbar.nuestros.profesionales}]]</a>
+								th:href="@{/supplier/}">[[#{navbar.nuestros.profesionales}]]</a>
 						</li>
 					</ul>
 					<ul class="navbar-nav mb-2 mb-md-1 ms-auto me-5 me-2">

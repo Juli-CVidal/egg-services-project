@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.egg.services.entities.Customer;
 import com.egg.services.entities.Person;
@@ -19,34 +20,36 @@ public class AccountController<T extends Person> {
 	private CrudService<T> service;
 
 	private final String accountType;
+	private final String formName;
 
 	public AccountController(CrudService<T> service, String accountType) {
 		this.accountType = accountType;
 		this.service = service;
+		this.formName = accountType.equals("customer") ? "new-customer" : "new-supplier";
 	}
 
 	// ============= CREATE =============
 	public String getForm(ModelMap model) {
-		model.put("accountType", accountType);
-		model.put("form_name", "sign-up-form");
-		return "form-basic.html";
+		model.put(accountType, accountType.equals("customer") ? new Customer() : new Supplier());
+		return formName;
 	}
 
 	// CREATE PROFILE
-	public String create(@Valid T person, ModelMap model, BindingResult result) {
+	public String create(@Valid T person, @RequestParam("repeat") String repeat, ModelMap model, BindingResult result) {
 		if (result.hasErrors()) {
-			addValuesToModelMap(person, "sign-up-form", model);
+			model.put(accountType, person);
 			model.put("errors", result.getAllErrors());
-			return "form-basic.html";
+			return formName;
 		}
+		addAdditionalValidations(person, result);
 		try {
 			service.create(person);
 			model.put("success", accountType + " added successfully");
-			return "redirect:/";
+			return "redirect:/login";
 		} catch (ServicesException se) {
-			addValuesToModelMap(person, "sign-up-form", model);
+			model.put(accountType, person);
 			model.put("error", se.getMessage());
-			return "form-basic.html";
+			return formName;
 		}
 	}
 
@@ -59,16 +62,15 @@ public class AccountController<T extends Person> {
 			model.put("error", se.getMessage());
 			return accountType + "-view";
 		}
-		model.put("form-name", "modify-profile-form");
-		return "form-basic.html";
+		return formName;
 	}
 
 	// MODIFY PROFILE
 	public String modify(@Valid T person, ModelMap model, BindingResult result) {
 		if (result.hasErrors()) {
-			addValuesToModelMap(person, "modify-profile-form", model);
+			model.put(accountType, person);
 			model.put("errors", result.getAllErrors());
-			return "form-basic.html";
+			return formName;
 		}
 		try {
 			service.update(person);
@@ -76,14 +78,12 @@ public class AccountController<T extends Person> {
 			return "redirect:/";
 		} catch (ServicesException se) {
 			model.put("error", se.getMessage());
-			addValuesToModelMap(person, "modify-profile-form", model);
-			return "form-basic.html";
+			model.put(accountType, person);
+			return formName;
 		}
 	}
 
-	private void addValuesToModelMap(T person, String formName, ModelMap model) {
-		model.put("accountType", accountType.toUpperCase());
-		model.put(accountType, person);
-		model.put("form_name", formName);
-	}
+	
+    protected void addAdditionalValidations(T person, BindingResult result) {
+    }
 }

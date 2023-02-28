@@ -4,11 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.egg.services.entities.Review;
 import com.egg.services.exceptions.ServicesException;
 import com.egg.services.repositories.ReviewRepository;
-
+@Service
 public class ReviewService implements CrudService<Review>{
 
 	@Autowired

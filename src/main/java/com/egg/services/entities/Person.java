@@ -1,18 +1,21 @@
 package com.egg.services.entities;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
 
 import com.egg.services.enums.Rol;
 
@@ -23,16 +26,17 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@Entity
 @Table(name = "person")
-@Inheritance
-@MappedSuperclass
-public abstract class Person {
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Person{
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.TABLE)
 	protected Integer id;
 
 	@NotBlank(message = "No valid name entered")
+	@Column(unique = true)
 	protected String name;
 
 	@NotBlank(message = "No lastName name entered")
@@ -49,13 +53,12 @@ public abstract class Person {
 	@Size(min = 8, message = "The password has to be at least 8 chars")
 	protected String password;
 
-	@NotEmpty
+	@NotNull
 	@Enumerated(EnumType.STRING)
 	protected Rol rol;
 
 	public Person(String name,String lastname, String phoneNumber,
 			String mail, String image, String password, Rol rol) {
-		super();
 		this.name = name;
 		this.lastname = lastname;
 		this.mail = mail;
